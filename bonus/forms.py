@@ -7,7 +7,7 @@ class SalesRangesForm(forms.ModelForm):
         model = SalesRanges
         fields = '__all__'
 
-    def clean(self):    
+    def clean(self):  
         cleaned_data = super().clean()
         all_fields = self.data
         
@@ -29,14 +29,13 @@ class SalesRangesForm(forms.ModelForm):
         k = list()
         errors = []
         for key in all_fields:
-             if key.startswith('salerange_set') and key.endswith('sale_range'):
+            if key.startswith('sale_range') and key.endswith('sale_range'):
                 ranges.append(all_fields[key])
                 k.append(key)
 
         try: float(ranges[-2].replace(',','.'))
-        except: errors.append('error')
+        except: raise ValidationError('Algo deu errado com suas faixas de valores, por favor verifique e tente novamente.')
         for i, value in enumerate(ranges[:-2]):
-            
             try:
                 val = value.split('-')
                 val_1 = float(val[0].replace(',','.'))
@@ -46,7 +45,8 @@ class SalesRangesForm(forms.ModelForm):
                     errors.append('error')
                 if val_1 >= val_2: errors.append('error')
             except:
-                errors.append('error')
+                
+                raise ValidationError('Algo deu errado com suas faixas de valores, por favor verifique e tente novamente.')
         
         values = [float(ranges[0].split('-')[1].replace(',','.'))]
         for rangel in ranges[1:-2]:
@@ -56,12 +56,14 @@ class SalesRangesForm(forms.ModelForm):
         for i in range(0, len(values), 2):
             total += round(values[i+1] - values[i], 2)
             
-        if total != 0.01 * (len(values)//2): errors.append('error')
+        if total != 0.01 * (len(values)//2): 
+            
+            errors.append('error')
         
 
         if errors:
+            
             raise ValidationError('Algo deu errado com suas faixas de valores, por favor verifique e tente novamente.')
         
-
         
         return cleaned_data

@@ -11,7 +11,7 @@ class SalesRanges(models.Model):
 class SaleRange(models.Model):
     sale_range = models.CharField(max_length=40, verbose_name='Faixas')
     value = models.FloatField()
-    sales_ranges = models.ForeignKey(SalesRanges, on_delete=models.CASCADE)
+    sales_ranges = models.ForeignKey(SalesRanges, on_delete=models.CASCADE, related_name='sale_range')
     def __str__(self):
         return 'faixa de venda'
 

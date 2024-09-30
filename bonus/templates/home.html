@@ -46,6 +46,11 @@
                 gap: 7px; 
                 margin-top: 30px;
             }
+            .bonus {
+                color: rgb(42, 209, 42);
+                margin-top: 25px;
+                font-size: 25px;
+            }
     </style>
 
     <script>
@@ -71,7 +76,7 @@
                 valor = valor.slice(0, -3).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + valor.slice(-3);
 
             }
-            elemento.value ='R$: '+valor;
+            elemento.value ='R$ '+valor;
         }
     </script>
 
@@ -82,10 +87,21 @@
         <div class="custom-bg">
             <h1> Bônus Gino </h1>
             <h5>Digite o valor de suas vendas para calcular sua bonificação.</h1>
-            <div class="sub-content">
-                <input class="form-control" id="vendas" placeholder="Vendas" onkeyup="formatarMoeda();">
-                <button type="button" class="btn btn-success">Calcular</button>
-            </div>
+            
+                <form class="col-6 mx-auto" method="POST" action="/view-bonus">
+                    <div class="sub-content">
+                        {% csrf_token %}   
+                        <input class="form-control" id="vendas" name="value" placeholder="Vendas" onkeyup="formatarMoeda();">
+                        <button type="submit" class="btn btn-success">Calcular</button>
+                    </div> 
+                </form>  
+            
+                {% if value %}
+                    <div class="bonus">
+                        Sua bonificação: {{value}}
+                    </div>
+                {% endif %}
+            
         </div>
     </div>
 </body>

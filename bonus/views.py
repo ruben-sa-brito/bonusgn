@@ -11,9 +11,10 @@ def view_bonus(request):
     for x in sales_ranges_related:
         if '-' not in x.sale_range: break
         if value <= float(x.sale_range.split('-')[1].replace(',','.')):
-            return render(request, 'home.html', {'value': f'R$ {x.value}0'})
+            if x.value == 0: return render(request, 'home.html', {'value': 'Voce não atingiu o valor mínimo necessário =('})
+            return render(request, 'home.html', {'value': f'Sua bonificação: R$ {x.value}0'})
     if sales_ranges.active_percentage:
-        return render(request, 'home.html', {'value':'R$ ' + str(int(value * (sales_ranges_related.last().value)/100)) + '.00'})
+        return render(request, 'home.html', {'value':'Incrível! Sua bonificação alcançou R$ ' + str(int(value * (sales_ranges_related.last().value)/100)) + '.00'})
     
-    return render(request, 'home.html', {'value': sales_ranges_related.last().value})
+    return render(request, 'home.html', {'value': f'Incrível! Sua bonificação alcançou R$ {sales_ranges_related.last().value}. '})
     

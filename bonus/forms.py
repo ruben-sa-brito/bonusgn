@@ -19,7 +19,6 @@ class SalesRangesForm(forms.ModelForm):
                     self.add_error('active_ranges', 'Já existe uma bonificação ativa')
                     raise ValidationError('Já existe uma bonificação ativa, é necessário desativá-la antes.')
         else:
-            print(cleaned_data.get('active_ranges'))
             if cleaned_data.get('active_ranges'):
                 if len(SalesRanges.objects.filter(active_ranges=True)) == 1:
                     self.add_error('active_ranges', 'Já existe uma bonificação ativa')
@@ -34,7 +33,7 @@ class SalesRangesForm(forms.ModelForm):
                 k.append(key)
 
         try: float(ranges[-2].replace(',','.'))
-        except: raise ValidationError('Algo deu errado com suas faixas de valores, por favor verifique e tente novamente.')
+        except: raise ValidationError('1 Algo deu errado com suas faixas de valores, por favor verifique e tente novamente.')
         for i, value in enumerate(ranges[:-2]):
             try:
                 val = value.split('-')
@@ -46,7 +45,7 @@ class SalesRangesForm(forms.ModelForm):
                 if val_1 >= val_2: errors.append('error')
             except:
                 
-                raise ValidationError('Algo deu errado com suas faixas de valores, por favor verifique e tente novamente.')
+                raise ValidationError('2 Algo deu errado com suas faixas de valores, por favor verifique e tente novamente.')
         
         values = [float(ranges[0].split('-')[1].replace(',','.'))]
         for rangel in ranges[1:-2]:
@@ -55,15 +54,15 @@ class SalesRangesForm(forms.ModelForm):
         values += [float(ranges[-2].replace(',','.'))]
         for i in range(0, len(values), 2):
             total += round(values[i+1] - values[i], 2)
-            
+        total = round(total, 2)
         if total != 0.01 * (len(values)//2): 
-            
+            print(total)
             errors.append('error')
         
 
         if errors:
             
-            raise ValidationError('Algo deu errado com suas faixas de valores, por favor verifique e tente novamente.')
+            raise ValidationError('3 Algo deu errado com suas faixas de valores, por favor verifique e tente novamente.')
         
         
         return cleaned_data

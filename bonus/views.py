@@ -5,7 +5,10 @@ def home_page(request):
 
 
 def view_bonus(request):
-    sales_ranges = SalesRanges.objects.get(active_ranges=True)
+    try:
+        sales_ranges = SalesRanges.objects.get(active_ranges=True)
+    except:
+        return render(request, 'home.html', {'not_found': f'Nenhuma bonificação ativa, contate o administrador'})
     sales_ranges_related = sales_ranges.sale_range.all()
     value = float(request.POST['value'].replace('.','').replace(',','.').replace('R$',''))
     for x in sales_ranges_related:
@@ -14,7 +17,7 @@ def view_bonus(request):
             if x.value == 0: return render(request, 'home.html', {'value': 'Voce não atingiu o valor mínimo necessário =('})
             return render(request, 'home.html', {'value': f'Sua bonificação: R$ {x.value}0'})
     if sales_ranges.active_percentage:
-        return render(request, 'home.html', {'value':'Incrível! Sua bonificação alcançou R$ ' + str(int(value * (sales_ranges_related.last().value)/100)) + '.00'})
+        return render(request, 'home.html', {'value':'Incrível! Sua bonificação: R$ ' + str(int(value * (sales_ranges_related.last().value)/100)) + '.00'})
     
-    return render(request, 'home.html', {'value': f'Incrível! Sua bonificação alcançou R$ {sales_ranges_related.last().value}. '})
+    return render(request, 'home.html', {'value': f'Incrível! Sua bonificação: R$ {sales_ranges_related.last().value}. '})
     

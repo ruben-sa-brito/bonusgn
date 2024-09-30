@@ -16,6 +16,7 @@
                 width: 100%;
                 margin: 0;
                 display: flex;
+                flex-direction: column-reverse;
                 justify-content: center;
                 align-items: center;
             }
@@ -39,6 +40,11 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+            }
+            .warning {
+                order: 1;
+                color: #f00b0bf5;
+                font-size: 25px;
             }
             .sub-content {
                 max-width: 300px; 
@@ -83,6 +89,11 @@
     <title>Document</title>
 </head >
 <body>
+    <div class="warning">
+        {% if not_found %}
+            {{not_found}}
+        {% endif %}
+    </div>
     <div class="main-content">
         <div class="custom-bg">
             <h1> Bônus Gino </h1>
@@ -91,7 +102,7 @@
                 <form class="col-6 mx-auto" method="POST" action="/view-bonus">
                     <div class="sub-content">
                         {% csrf_token %}   
-                        <input class="form-control" id="vendas" name="value" placeholder="Vendas" onkeyup="formatarMoeda();">
+                        <input class="form-control" id="vendas" name="value" placeholder="Vendas" required onkeyup="formatarMoeda();">
                         <button type="submit" class="btn btn-success">Calcular</button>
                     </div> 
                 </form>  

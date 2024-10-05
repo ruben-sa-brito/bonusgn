@@ -1,0 +1,110 @@
+html {
+    height: 100%;
+}
+body {
+    margin: 0;
+    background: linear-gradient(135deg, #3a3747, #9992bb);
+    font-family: Helvetica Neue;
+    color: rgb(243, 241, 238);
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+}
+a {
+    color:rgb(0, 0, 0);
+    text-decoration: none;
+    padding: 0px 50px 10px 0px;
+    font-size: 25pt;
+
+}
+
+a:hover::after {  
+    transition: 0.3s;
+    width: 100%;
+    transition: width 0.3s ease-in-out;
+    
+}
+a:hover {
+    color: rgb(34, 34, 34); 
+}
+
+a::after {
+    content: " ";
+    display: block;
+    width: 0%;
+    height: 2px;
+    margin-top: -5px;
+    background-color: black;
+}
+
+.main-content {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 60px;   
+}
+@media (max-width: 576px) { 
+    .main-content {
+        width: 75%; 
+    }
+}
+
+.custom-bg {
+    background-color: #f5a75d17;
+    border: 1px solid rgb(39, 39, 39);
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+    width: 80%;
+    border-radius: 20px;
+    height: 300px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.custom-bg-ranges {
+    background-color: #f5a75d17;
+    border: 1px solid rgb(39, 39, 39);
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+    width: 25%;
+    border-radius: 20px;
+    min-height: 400px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+.range {
+    height: 55px;
+}
+.warning {
+    order: 1;
+    color: #f00b0bf5;
+    font-size: 25px;
+}
+.sub-content {
+    max-width: 300px; 
+    display: flex; 
+    gap: 7px; 
+    margin-top: 20px;
+}
+@media (max-width: 576px) { 
+    .sub-content {
+        margin-top: 5px; 
+    }
+}
+.bonus {
+    color: rgb(42, 209, 42);
+    margin-top: 25px;
+    font-size: 25px;
+}
+@media (max-width: 576px) { 
+    .bonus {
+        font-size: 20px;
+    }
+}
